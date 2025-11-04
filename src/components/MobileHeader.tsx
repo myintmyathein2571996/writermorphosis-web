@@ -1,4 +1,4 @@
-import { ArrowLeft, Bell } from "lucide-react";
+import { ArrowLeft, Bell, Search, LogIn } from "lucide-react";
 import logo from "figma:asset/38e13cb38fccbae993fc82c55e790581db92e95b.png";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
@@ -9,6 +9,8 @@ interface MobileHeaderProps {
   showLogo?: boolean;
   onNotificationsClick?: () => void;
   onProfileClick?: () => void;
+  onSearchClick?: () => void;
+  onLoginClick?: () => void;
   userAvatar?: string;
   isLoggedIn?: boolean;
   notificationCount?: number;
@@ -21,6 +23,8 @@ export function MobileHeader({
   showLogo = false,
   onNotificationsClick,
   onProfileClick,
+  onSearchClick,
+  onLoginClick,
   userAvatar,
   isLoggedIn = false,
   notificationCount = 0,
@@ -56,14 +60,24 @@ export function MobileHeader({
           ) : null}
         </div>
 
-        {/* Right side - Notifications */}
+        {/* Right side - Search, Notifications, Login */}
         <div className="flex items-center justify-end gap-2 flex-1">
+          {onSearchClick && (
+            <button onClick={onSearchClick} className="p-2">
+              <Search className="h-5 w-5" />
+            </button>
+          )}
           {isLoggedIn && onNotificationsClick && (
             <button onClick={onNotificationsClick} className="p-2 relative">
               <Bell className="h-5 w-5" />
               {notificationCount > 0 && (
                 <span className="absolute top-1 right-1 h-2 w-2 bg-red-500 rounded-full"></span>
               )}
+            </button>
+          )}
+          {!isLoggedIn && onLoginClick && (
+            <button onClick={onLoginClick} className="p-2">
+              <LogIn className="h-5 w-5" />
             </button>
           )}
         </div>

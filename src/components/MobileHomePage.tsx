@@ -67,8 +67,8 @@ export function MobileHomePage({
   return (
     <div className="pb-16">
       {/* Daily Quote */}
-      <div className="p-4" style={{ background: 'linear-gradient(to bottom right, rgba(147, 51, 234, 0.1), rgba(99, 102, 241, 0.1))' }}>
-        <Card style={{ borderColor: 'rgba(147, 51, 234, 0.3)', backgroundColor: 'var(--thunder)' }}>
+      <div className="p-4" style={{ background: 'linear-gradient(to bottom right, rgba(210, 136, 74, 0.15), rgba(139, 111, 61, 0.1))' }}>
+        <Card style={{ borderColor: 'var(--accent-orange-warm)', backgroundColor: 'var(--thunder)' }}>
           <CardContent className="p-4">
             <div className="flex gap-3">
               <Quote className="h-8 w-8 flex-shrink-0" style={{ color: 'var(--header-bg)' }} />
@@ -171,7 +171,7 @@ export function MobileHomePage({
 
         <TabsContent value="latest" className="m-0">
           {filteredLatestPosts.length > 0 ? (
-            <div className="divide-y" style={{ borderColor: 'var(--tundora)' }}>
+            <div className="flex flex-col gap-3 p-3">
               {filteredLatestPosts.map((post, index) => (
                 <MobilePostCard
                   key={post.id}
@@ -206,7 +206,7 @@ export function MobileHomePage({
 
         <TabsContent value="popular" className="m-0">
           {filteredPopularPosts.length > 0 ? (
-            <div className="divide-y" style={{ borderColor: 'var(--tundora)' }}>
+            <div className="flex flex-col gap-3 p-3">
               {filteredPopularPosts.map((post) => (
                 <MobilePostCard
                   key={post.id}
@@ -239,19 +239,53 @@ export function MobileHomePage({
         </TabsContent>
       </Tabs>
 
-      {/* Popular Tags */}
-      <div className="p-4" style={{ backgroundColor: 'var(--tundora)' }}>
-        <h3 className="mb-3" style={{ color: 'var(--pampas)' }}>Trending Tags</h3>
+      {/* Trending Tags */}
+      <div 
+        className="p-4 mt-4" 
+        style={{ 
+          background: 'linear-gradient(135deg, rgba(139, 111, 61, 0.2), rgba(210, 136, 74, 0.15))',
+          borderTop: '1px solid var(--border-soft)',
+          borderBottom: '1px solid var(--border-soft)'
+        }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <div 
+            className="p-2 rounded-lg"
+            style={{ backgroundColor: 'rgba(210, 136, 74, 0.2)' }}
+          >
+            <TrendingUp className="h-5 w-5" style={{ color: 'var(--accent-orange-warm)' }} />
+          </div>
+          <h3 className="mb-0" style={{ color: 'var(--text-primary)' }}>
+            Trending Tags
+          </h3>
+        </div>
         <div className="flex flex-wrap gap-2">
-          {tags.slice(0, 8).map((tag) => (
-            <Badge
+          {tags.slice(0, 8).map((tag, index) => (
+            <button
               key={tag.id}
-              variant="outline"
-              className="cursor-pointer hover:bg-white"
               onClick={() => onTagClick(tag.slug)}
+              className="px-3 py-2 rounded-lg transition-all hover:scale-105 active:scale-95"
+              style={{
+                backgroundColor: index % 2 === 0 ? 'var(--bg-card)' : 'rgba(210, 136, 74, 0.1)',
+                border: '1px solid',
+                borderColor: index % 2 === 0 ? 'var(--border-soft)' : 'rgba(210, 136, 74, 0.3)',
+                color: 'var(--text-primary)'
+              }}
             >
-              #{tag.name}
-            </Badge>
+              <span className="flex items-center gap-1.5">
+                <span style={{ color: 'var(--accent-orange-warm)' }}>#</span>
+                <span className="text-sm">{tag.name}</span>
+                <span 
+                  className="text-xs px-1.5 py-0.5 rounded"
+                  style={{ 
+                    backgroundColor: 'rgba(210, 136, 74, 0.2)',
+                    color: 'var(--accent-orange-warm)'
+                  }}
+                >
+                  {tag.count}
+                </span>
+              </span>
+            </button>
           ))}
         </div>
       </div>

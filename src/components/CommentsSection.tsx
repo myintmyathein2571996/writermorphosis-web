@@ -10,12 +10,16 @@ interface CommentsSectionProps {
   comments: Comment[];
   currentUserAvatar?: string;
   onAddComment?: (content: string) => void;
+  isLoggedIn?: boolean;
+  onLoginClick?: () => void;
 }
 
 export function CommentsSection({
   comments,
   currentUserAvatar = "https://api.dicebear.com/7.x/avataaars/svg?seed=Current",
   onAddComment,
+  isLoggedIn = false,
+  onLoginClick,
 }: CommentsSectionProps) {
   const [newComment, setNewComment] = useState("");
   const [replyTo, setReplyTo] = useState<string | null>(null);
@@ -68,12 +72,14 @@ export function CommentsSection({
               <Heart className="h-4 w-4" />
               <span>{comment.likes}</span>
             </button>
-            <button
-              className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
-              onClick={() => setReplyTo(comment.id)}
-            >
-              Reply
-            </button>
+            {isLoggedIn && (
+              <button
+                className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
+                onClick={() => setReplyTo(comment.id)}
+              >
+                Reply
+              </button>
+            )}
             <span className="text-xs text-gray-400">
               {formatTime(comment.createdAt)}
             </span>
@@ -101,34 +107,49 @@ export function CommentsSection({
         </div>
 
         {/* Add Comment */}
-        <div className="mb-6">
-          <div className="flex gap-3 mb-3">
-            <ImageWithFallback
-              src={currentUserAvatar}
-              alt="You"
-              className="h-10 w-10 rounded-full flex-shrink-0"
-            />
-            <div className="flex-1">
-              <Textarea
-                placeholder="Share your thoughts..."
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                className="min-h-[80px] resize-none"
+        {isLoggedIn ? (
+          <div className="mb-6">
+            <div className="flex gap-3 mb-3">
+              <ImageWithFallback
+                src={currentUserAvatar}
+                alt="You"
+                className="h-10 w-10 rounded-full flex-shrink-0"
               />
+              <div className="flex-1">
+                <Textarea
+                  placeholder="Share your thoughts..."
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  className="min-h-[80px] resize-none"
+                />
+              </div>
+            </div>
+            <div className="flex justify-end">
+              <Button
+                size="sm"
+                onClick={handleSubmit}
+                disabled={!newComment.trim()}
+                className="gap-2"
+              >
+                <Send className="h-4 w-4" />
+                Post Comment
+              </Button>
             </div>
           </div>
-          <div className="flex justify-end">
+        ) : (
+          <div className="mb-6 p-6 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-soft)' }}>
+            <MessageCircle className="h-12 w-12 mx-auto mb-3" style={{ color: 'var(--cotton-seed)' }} />
+            <p className="mb-4" style={{ color: 'var(--text-muted)' }}>
+              Login to join the conversation and share your thoughts
+            </p>
             <Button
-              size="sm"
-              onClick={handleSubmit}
-              disabled={!newComment.trim()}
-              className="gap-2"
+              onClick={onLoginClick}
+              style={{ backgroundColor: 'var(--accent-orange-warm)', color: 'white' }}
             >
-              <Send className="h-4 w-4" />
-              Post Comment
+              Login to Comment
             </Button>
           </div>
-        </div>
+        )}
 
         <Separator className="my-4" />
 

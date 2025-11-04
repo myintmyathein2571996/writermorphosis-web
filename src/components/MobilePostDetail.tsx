@@ -16,6 +16,8 @@ interface MobilePostDetailProps {
   onTagClick: (tagSlug: string) => void;
   onAuthorClick?: (authorName: string) => void;
   currentUserAvatar?: string;
+  isLoggedIn?: boolean;
+  onLoginClick?: () => void;
 }
 
 export function MobilePostDetail({
@@ -27,6 +29,8 @@ export function MobilePostDetail({
   onTagClick,
   onAuthorClick,
   currentUserAvatar,
+  isLoggedIn = false,
+  onLoginClick,
 }: MobilePostDetailProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
@@ -122,34 +126,49 @@ export function MobilePostDetail({
         <p className="text-lg mb-6" style={{ color: 'var(--text-muted)' }}>{post.excerpt}</p>
 
         {/* Action Buttons */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
-          <Button 
-            variant="outline" 
-            className="gap-2"
-            onClick={() => setIsLiked(!isLiked)}
-            style={{
-              backgroundColor: isLiked ? 'rgba(210, 136, 74, 0.1)' : 'transparent',
-              borderColor: 'var(--border-soft)',
-              color: isLiked ? 'var(--accent-orange-warm)' : 'var(--text-primary)'
-            }}
-          >
-            <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
-            Like
-          </Button>
-          <Button 
-            variant="outline" 
-            className="gap-2"
-            onClick={() => setIsSaved(!isSaved)}
-            style={{
-              backgroundColor: isSaved ? 'rgba(210, 136, 74, 0.1)' : 'transparent',
-              borderColor: 'var(--border-soft)',
-              color: isSaved ? 'var(--accent-orange-warm)' : 'var(--text-primary)'
-            }}
-          >
-            <Bookmark className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
-            Save
-          </Button>
-        </div>
+        {isLoggedIn ? (
+          <div className="grid grid-cols-2 gap-3 mb-6">
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              onClick={() => setIsLiked(!isLiked)}
+              style={{
+                backgroundColor: isLiked ? 'rgba(210, 136, 74, 0.1)' : 'transparent',
+                borderColor: 'var(--border-soft)',
+                color: isLiked ? 'var(--accent-orange-warm)' : 'var(--text-primary)'
+              }}
+            >
+              <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
+              Like
+            </Button>
+            <Button 
+              variant="outline" 
+              className="gap-2"
+              onClick={() => setIsSaved(!isSaved)}
+              style={{
+                backgroundColor: isSaved ? 'rgba(210, 136, 74, 0.1)' : 'transparent',
+                borderColor: 'var(--border-soft)',
+                color: isSaved ? 'var(--accent-orange-warm)' : 'var(--text-primary)'
+              }}
+            >
+              <Bookmark className={`h-4 w-4 ${isSaved ? 'fill-current' : ''}`} />
+              Save
+            </Button>
+          </div>
+        ) : (
+          <div className="mb-6 p-4 rounded-lg text-center" style={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-soft)', border: '1px solid' }}>
+            <p className="text-sm mb-3" style={{ color: 'var(--text-muted)' }}>
+              Login to like and save articles
+            </p>
+            <Button
+              size="sm"
+              onClick={onLoginClick}
+              style={{ backgroundColor: 'var(--accent-orange-warm)', color: 'white' }}
+            >
+              Login
+            </Button>
+          </div>
+        )}
       </div>
 
       {/* Web Content Section */}
@@ -295,6 +314,8 @@ export function MobilePostDetail({
       <CommentsSection
         comments={comments}
         currentUserAvatar={currentUserAvatar}
+        isLoggedIn={isLoggedIn}
+        onLoginClick={onLoginClick}
       />
     </div>
   );

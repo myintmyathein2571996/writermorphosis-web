@@ -1,4 +1,4 @@
-import { Home, Folder, BookmarkCheck, Calendar, Shuffle } from "lucide-react";
+import { Home, Folder, BookmarkCheck, Calendar, Menu } from "lucide-react";
 
 interface BottomNavProps {
   currentPage: string;
@@ -10,8 +10,8 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
     { name: "Home", path: "home", icon: Home },
     { name: "Categories", path: "categories", icon: Folder },
     { name: "Tags", path: "tags", icon: BookmarkCheck },
-    { name: "Random", path: "random", icon: Shuffle },
     { name: "History", path: "history", icon: Calendar },
+    { name: "More", path: "more", icon: Menu },
   ];
 
   return (
@@ -20,8 +20,9 @@ export function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = currentPage === item.path || 
-            (item.path === "categories" && (currentPage === "category" || currentPage === "tag")) ||
-            (item.path === "tags" && currentPage === "tag");
+            (item.path === "categories" && currentPage === "category") ||
+            (item.path === "tags" && currentPage === "tag") ||
+            (item.path === "more" && (currentPage === "more" || currentPage === "profile" || currentPage === "settings" || currentPage === "saved" || currentPage === "reading-history" || currentPage === "quiz" || currentPage === "about"));
           
           return (
             <button

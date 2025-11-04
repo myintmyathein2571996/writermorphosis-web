@@ -30,22 +30,34 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4 pb-20">
+    <div 
+      className="min-h-screen flex items-center justify-center p-4 pb-20"
+      style={{ 
+        background: 'linear-gradient(135deg, #1E1A18 0%, #2A2422 50%, #2F2926 100%)'
+      }}
+    >
       <div className="w-full max-w-md">
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div 
+          className="rounded-2xl shadow-2xl p-8 border"
+          style={{
+            backgroundColor: 'var(--bg-card)',
+            borderColor: 'var(--accent-leaf)',
+            boxShadow: '0 20px 50px rgba(0, 0, 0, 0.5)'
+          }}
+        >
           {/* Logo */}
           <div className="text-center mb-8">
             <img src={logo} alt="WriterMorphosis" className="h-16 w-auto mx-auto mb-4" />
-            <h1 className="mb-2">Create Account</h1>
-            <p className="text-gray-600">Start your writing journey today</p>
+            <h1 className="mb-2" style={{ color: 'var(--accent-orange-warm)' }}>Create Account</h1>
+            <p style={{ color: 'var(--text-muted)' }}>Start your writing journey today</p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="name">Full Name</Label>
+              <Label htmlFor="name" style={{ color: 'var(--text-primary)' }}>Full Name</Label>
               <div className="relative mt-1">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: 'var(--cotton-seed)' }} />
                 <Input
                   id="name"
                   name="name"
@@ -54,15 +66,20 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
                   value={formData.name}
                   onChange={handleChange}
                   className="pl-10"
+                  style={{
+                    backgroundColor: 'var(--content-bg)',
+                    borderColor: 'var(--border-soft)',
+                    color: 'var(--text-primary)'
+                  }}
                   required
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" style={{ color: 'var(--text-primary)' }}>Email</Label>
               <div className="relative mt-1">
-                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: 'var(--cotton-seed)' }} />
                 <Input
                   id="email"
                   name="email"
@@ -71,15 +88,20 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
                   value={formData.email}
                   onChange={handleChange}
                   className="pl-10"
+                  style={{
+                    backgroundColor: 'var(--content-bg)',
+                    borderColor: 'var(--border-soft)',
+                    color: 'var(--text-primary)'
+                  }}
                   required
                 />
               </div>
             </div>
 
             <div>
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" style={{ color: 'var(--text-primary)' }}>Password</Label>
               <div className="relative mt-1">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: 'var(--cotton-seed)' }} />
                 <Input
                   id="password"
                   name="password"
@@ -88,12 +110,18 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
                   value={formData.password}
                   onChange={handleChange}
                   className="pl-10 pr-10"
+                  style={{
+                    backgroundColor: 'var(--content-bg)',
+                    borderColor: 'var(--border-soft)',
+                    color: 'var(--text-primary)'
+                  }}
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2"
+                  style={{ color: 'var(--cotton-seed)' }}
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5" />
@@ -105,9 +133,9 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
             </div>
 
             <div>
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword" style={{ color: 'var(--text-primary)' }}>Confirm Password</Label>
               <div className="relative mt-1">
-                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5" style={{ color: 'var(--cotton-seed)' }} />
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -116,26 +144,54 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   className="pl-10"
+                  style={{
+                    backgroundColor: 'var(--content-bg)',
+                    borderColor: 'var(--border-soft)',
+                    color: 'var(--text-primary)'
+                  }}
                   required
                 />
               </div>
             </div>
 
             <div className="flex items-start gap-2 text-sm">
-              <input type="checkbox" className="mt-1 rounded" required />
-              <span className="text-gray-600">
+              <input 
+                type="checkbox" 
+                className="mt-1 rounded" 
+                style={{
+                  accentColor: 'var(--accent-orange-warm)'
+                }}
+                required 
+              />
+              <span style={{ color: 'var(--text-muted)' }}>
                 I agree to the{" "}
-                <button type="button" className="text-gray-900 hover:underline">
+                <button 
+                  type="button" 
+                  className="hover:underline"
+                  style={{ color: 'var(--accent-orange-warm)' }}
+                >
                   Terms of Service
                 </button>{" "}
                 and{" "}
-                <button type="button" className="text-gray-900 hover:underline">
+                <button 
+                  type="button" 
+                  className="hover:underline"
+                  style={{ color: 'var(--accent-orange-warm)' }}
+                >
                   Privacy Policy
                 </button>
               </span>
             </div>
 
-            <Button type="submit" className="w-full">
+            <Button 
+              type="submit" 
+              className="w-full"
+              style={{
+                backgroundColor: 'var(--accent-orange-warm)',
+                color: 'white',
+                border: 'none'
+              }}
+            >
               Create Account
             </Button>
           </form>
@@ -143,16 +199,32 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
           {/* Divider */}
           <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
+              <div className="w-full border-t" style={{ borderColor: 'var(--border-soft)' }}></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-gray-500">Or sign up with</span>
+              <span 
+                className="px-4" 
+                style={{ 
+                  backgroundColor: 'var(--bg-card)',
+                  color: 'var(--text-muted)' 
+                }}
+              >
+                Or sign up with
+              </span>
             </div>
           </div>
 
           {/* Social Signup */}
           <div className="grid grid-cols-2 gap-3">
-            <Button variant="outline" type="button">
+            <Button 
+              variant="outline" 
+              type="button"
+              style={{
+                backgroundColor: 'transparent',
+                borderColor: 'var(--border-soft)',
+                color: 'var(--text-primary)'
+              }}
+            >
               <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
@@ -173,7 +245,15 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
               </svg>
               Google
             </Button>
-            <Button variant="outline" type="button">
+            <Button 
+              variant="outline" 
+              type="button"
+              style={{
+                backgroundColor: 'transparent',
+                borderColor: 'var(--border-soft)',
+                color: 'var(--text-primary)'
+              }}
+            >
               <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
               </svg>
@@ -182,12 +262,13 @@ export function RegisterPage({ onRegister, onNavigateToLogin }: RegisterPageProp
           </div>
 
           {/* Sign In Link */}
-          <p className="mt-6 text-center text-sm text-gray-600">
+          <p className="mt-6 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
             Already have an account?{" "}
             <button
               type="button"
               onClick={onNavigateToLogin}
-              className="text-gray-900 hover:underline"
+              className="hover:underline"
+              style={{ color: 'var(--accent-orange-warm)' }}
             >
               Sign in
             </button>

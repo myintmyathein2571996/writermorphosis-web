@@ -19,9 +19,10 @@ import { AuthorPage } from "./components/AuthorPage";
 import { SearchPage } from "./components/SearchPage";
 import { SavedArticlesPage } from "./components/SavedArticlesPage";
 import { ReadingHistoryPage } from "./components/ReadingHistoryPage";
+import { MorePage } from "./components/MorePage";
 import { blogPosts, categories, tags, currentUser, comments, notifications, historyPosts, quizzes, getDailyQuote } from "./data/mockData";
 
-type Page = "home" | "post" | "categories" | "category" | "tags" | "tag" | "about" | "login" | "register" | "notifications" | "profile" | "history" | "random" | "settings" | "quiz" | "author" | "search" | "saved" | "reading-history";
+type Page = "home" | "post" | "categories" | "category" | "tags" | "tag" | "about" | "login" | "register" | "notifications" | "profile" | "history" | "random" | "settings" | "quiz" | "author" | "search" | "saved" | "reading-history" | "more";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>("home");
@@ -96,6 +97,8 @@ export default function App() {
       setSelectedTagSlug(null);
     } else if (page === "about") {
       setCurrentPage("about");
+    } else if (page === "more") {
+      setCurrentPage("more");
     } else if (page === "profile") {
       if (!isLoggedIn) {
         setCurrentPage("login");
@@ -113,7 +116,33 @@ export default function App() {
         setCurrentPage("settings");
       }
     } else if (page === "quiz") {
-      setCurrentPage("quiz");
+      if (!isLoggedIn) {
+        setCurrentPage("login");
+      } else {
+        setCurrentPage("quiz");
+      }
+    } else if (page === "saved") {
+      if (!isLoggedIn) {
+        setCurrentPage("login");
+      } else {
+        setCurrentPage("saved");
+      }
+    } else if (page === "reading-history") {
+      if (!isLoggedIn) {
+        setCurrentPage("login");
+      } else {
+        setCurrentPage("reading-history");
+      }
+    } else if (page === "notifications") {
+      if (!isLoggedIn) {
+        setCurrentPage("login");
+      } else {
+        setCurrentPage("notifications");
+      }
+    } else if (page === "login") {
+      setCurrentPage("login");
+    } else if (page === "register") {
+      setCurrentPage("register");
     }
     window.scrollTo(0, 0);
   };
@@ -169,6 +198,8 @@ export default function App() {
       userAvatar: isLoggedIn ? currentUser.avatar : undefined,
       onNotificationsClick: handleNotificationsClick,
       onProfileClick: handleProfileClick,
+      onSearchClick: handleSearchClick,
+      onLoginClick: () => setCurrentPage("login"),
       notificationCount: unreadNotifications,
     };
 
@@ -187,27 +218,29 @@ export default function App() {
     } else if (currentPage === "tags") {
       return { ...baseProps, showLogo: true };
     } else if (currentPage === "about") {
-      return { ...baseProps, title: "About" };
+      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("more"), title: "About" };
     } else if (currentPage === "notifications") {
       return { ...baseProps, showBack: true, onBack: () => setCurrentPage("home"), title: "Notifications" };
     } else if (currentPage === "profile") {
-      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("home"), title: "Profile" };
+      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("more"), title: "Profile" };
+    } else if (currentPage === "more") {
+      return { ...baseProps, showLogo: true };
     } else if (currentPage === "history") {
       return { ...baseProps, showLogo: true };
     } else if (currentPage === "random") {
       return { ...baseProps, showLogo: true };
     } else if (currentPage === "settings") {
-      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("profile"), title: "Settings" };
+      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("more"), title: "Settings" };
     } else if (currentPage === "quiz") {
-      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("home"), title: "Quizzes" };
+      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("more"), title: "Quizzes" };
     } else if (currentPage === "author" && selectedAuthorName) {
       return { ...baseProps, showBack: true, onBack: () => setCurrentPage("home"), title: selectedAuthorName };
     } else if (currentPage === "search") {
       return { ...baseProps, showBack: true, onBack: () => setCurrentPage("home"), title: "Search" };
     } else if (currentPage === "saved") {
-      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("profile"), title: "Saved Articles" };
+      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("more"), title: "Saved Articles" };
     } else if (currentPage === "reading-history") {
-      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("profile"), title: "Reading History" };
+      return { ...baseProps, showBack: true, onBack: () => setCurrentPage("more"), title: "Reading History" };
     }
     return baseProps;
   };
@@ -354,6 +387,8 @@ export default function App() {
           onTagClick={handleTagClick}
           onAuthorClick={handleAuthorClick}
           currentUserAvatar={isLoggedIn ? currentUser.avatar : undefined}
+          isLoggedIn={isLoggedIn}
+          onLoginClick={() => setCurrentPage("login")}
         />
       );
     }
@@ -404,6 +439,16 @@ export default function App() {
 
     if (currentPage === "about") {
       return <MobileAboutPage />;
+    }
+
+    if (currentPage === "more") {
+      return (
+        <MorePage
+          isLoggedIn={isLoggedIn}
+          currentUser={isLoggedIn ? currentUser : undefined}
+          onNavigate={handleNavigate}
+        />
+      );
     }
 
     return <MobileHomePage {...homePageProps} />;

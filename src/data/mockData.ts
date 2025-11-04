@@ -38,9 +38,8 @@ export const blogPosts: BlogPost[] = [
     title: "The Art of Crafting Compelling Characters",
     excerpt: "Discover the secrets to creating memorable characters that resonate with readers and drive your narrative forward.",
     content: "Creating compelling characters is the cornerstone of great storytelling. Characters are the heart and soul of your narrative, and readers connect with stories through the people who inhabit them. In this comprehensive guide, we'll explore the fundamental techniques for developing characters that feel authentic, relatable, and unforgettable...",
-    // image: "https://images.unsplash.com/flagged/photo-1576697010739-6373b63f3204?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3cml0aW5nJTIwZGVzayUyMGxhcHRvcHxlbnwxfHx8fDE3NjE2NTcwNTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    image: "https://images.unsplash.com/flagged/photo-1576697010739-6373b63f3204?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3cml0aW5nJTIwZGVzayUyMGxhcHRvcHxlbnwxfHx8fDE3NjE2NTcwNTl8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
     category: "Writing Tips",
-    image : "https://media.istockphoto.com/id/922745190/th/%E0%…20&c=GtZEhY0cFErh1pFjFLGk3BQU8Sp4JH1aCGlQHnzsDRQ=",
     tags: ["Character Development", "Storytelling", "Writing Process"],
     author: {
       name: "Sarah Mitchell",

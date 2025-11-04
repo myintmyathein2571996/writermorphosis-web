@@ -1,4 +1,4 @@
-import { Settings, BookMarked, Eye, Calendar, Edit, LogOut, Brain, ChevronRight, User, Shield, Bell, HelpCircle } from "lucide-react";
+import { Calendar, Edit, LogOut, User, Trophy, TrendingUp, Star } from "lucide-react";
 import { User as UserType, BlogPost } from "../types/blog";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
@@ -12,13 +12,6 @@ interface ProfilePageProps {
   onPostClick: (postId: string) => void;
   onLogout: () => void;
   onEditProfile: () => void;
-  onSettingsClick?: () => void;
-  onHistoryClick?: () => void;
-  onQuizClick?: () => void;
-  onNotificationsClick?: () => void;
-  onSavedClick?: () => void;
-  onReadingHistoryClick?: () => void;
-  onAuthorClick?: (authorName: string) => void;
 }
 
 export function ProfilePage({
@@ -28,13 +21,6 @@ export function ProfilePage({
   onPostClick,
   onLogout,
   onEditProfile,
-  onSettingsClick,
-  onHistoryClick,
-  onQuizClick,
-  onNotificationsClick,
-  onSavedClick,
-  onReadingHistoryClick,
-  onAuthorClick,
 }: ProfilePageProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -44,50 +30,9 @@ export function ProfilePage({
     });
   };
 
-  const menuItems = [
-    {
-      icon: BookMarked,
-      label: "Saved Articles",
-      description: `${savedPosts.length} saved`,
-      onClick: onSavedClick,
-      color: "var(--accent-orange-warm)",
-    },
-    {
-      icon: Eye,
-      label: "Reading History",
-      description: `${readingHistory.length} articles read`,
-      onClick: onReadingHistoryClick,
-      color: "var(--accent-leaf)",
-    },
-    {
-      icon: Brain,
-      label: "Writing Quizzes",
-      description: "Test your knowledge",
-      onClick: onQuizClick,
-      color: "var(--accent-orange-warm)",
-    },
-    {
-      icon: Calendar,
-      label: "This Day in History",
-      description: "Historical events",
-      onClick: onHistoryClick,
-      color: "var(--accent-leaf)",
-    },
-    {
-      icon: Bell,
-      label: "Notifications",
-      description: "Manage your alerts",
-      onClick: onNotificationsClick,
-      color: "var(--accent-orange-warm)",
-    },
-    {
-      icon: Settings,
-      label: "Settings",
-      description: "Preferences & privacy",
-      onClick: onSettingsClick,
-      color: "var(--accent-leaf)",
-    },
-  ];
+  // Calculate reading streak (mock data)
+  const readingStreak = 7;
+  const totalReadingTime = user.postsRead * 5; // Assuming 5 min per article
 
   return (
     <div className="pb-16" style={{ backgroundColor: 'var(--content-bg)' }}>
@@ -201,103 +146,98 @@ export function ProfilePage({
         </div>
       </div>
 
-      {/* Menu Section */}
-      <div className="p-4 space-y-2">
+      {/* Activity Section */}
+      <div className="p-4 space-y-4">
         <h2 className="mb-4 px-2" style={{ color: 'var(--text-primary)' }}>
-          Quick Access
+          Reading Activity
         </h2>
         
-        {menuItems.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <Card
-              key={index}
-              className="cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-0"
-              style={{ backgroundColor: 'var(--bg-card)' }}
-              onClick={item.onClick}
-            >
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="p-3 rounded-xl"
-                      style={{ 
-                        backgroundColor: `${item.color}20`,
-                      }}
-                    >
-                      <Icon 
-                        className="h-5 w-5" 
-                        style={{ color: item.color }}
-                      />
-                    </div>
-                    <div>
-                      <h3 
-                        className="mb-0.5"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        {item.label}
-                      </h3>
-                      <p 
-                        className="text-sm"
-                        style={{ color: 'var(--text-muted)' }}
-                      >
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                  <ChevronRight 
-                    className="h-5 w-5" 
-                    style={{ color: 'var(--text-muted)' }}
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-
-        <Separator className="my-4" style={{ backgroundColor: 'var(--border-soft)' }} />
-
-        {/* Help & Support */}
-        <Card
-          className="cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99] border-0"
-          style={{ backgroundColor: 'var(--bg-card)' }}
-        >
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
+        {/* Reading Stats Cards */}
+        <div className="grid grid-cols-2 gap-3">
+          <Card className="border-0" style={{ backgroundColor: 'var(--bg-card)' }}>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3 mb-2">
                 <div 
-                  className="p-3 rounded-xl"
+                  className="p-2 rounded-lg"
+                  style={{ backgroundColor: 'rgba(210, 136, 74, 0.2)' }}
+                >
+                  <TrendingUp className="h-4 w-4" style={{ color: 'var(--accent-orange-warm)' }} />
+                </div>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  Streak
+                </p>
+              </div>
+              <p className="text-2xl mb-1" style={{ color: 'var(--accent-orange-warm)' }}>
+                {readingStreak}
+              </p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                days in a row
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-0" style={{ backgroundColor: 'var(--bg-card)' }}>
+            <CardContent className="p-4">
+              <div className="flex items-center gap-3 mb-2">
+                <div 
+                  className="p-2 rounded-lg"
+                  style={{ backgroundColor: 'rgba(139, 111, 61, 0.2)' }}
+                >
+                  <Calendar className="h-4 w-4" style={{ color: 'var(--accent-leaf)' }} />
+                </div>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  Reading Time
+                </p>
+              </div>
+              <p className="text-2xl mb-1" style={{ color: 'var(--accent-leaf)' }}>
+                {totalReadingTime}
+              </p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                minutes total
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Achievements */}
+        <Card className="border-0" style={{ backgroundColor: 'var(--bg-card)' }}>
+          <CardContent className="p-4">
+            <div className="flex items-center gap-3 mb-4">
+              <div 
+                className="p-2 rounded-lg"
+                style={{ backgroundColor: 'rgba(210, 136, 74, 0.2)' }}
+              >
+                <Trophy className="h-5 w-5" style={{ color: 'var(--accent-orange-warm)' }} />
+              </div>
+              <h3 style={{ color: 'var(--text-primary)' }}>Achievements</h3>
+            </div>
+            <div className="grid grid-cols-4 gap-3">
+              {[1, 2, 3, 4].map((badge) => (
+                <div 
+                  key={badge}
+                  className="aspect-square rounded-lg flex items-center justify-center border"
                   style={{ 
-                    backgroundColor: 'rgba(139, 111, 61, 0.2)',
+                    backgroundColor: badge <= 2 ? 'rgba(210, 136, 74, 0.1)' : 'transparent',
+                    borderColor: 'var(--border-soft)'
                   }}
                 >
-                  <HelpCircle 
-                    className="h-5 w-5" 
-                    style={{ color: 'var(--accent-leaf)' }}
+                  <Star 
+                    className="h-6 w-6" 
+                    style={{ 
+                      color: badge <= 2 ? 'var(--accent-orange-warm)' : 'var(--cotton-seed)',
+                      fill: badge <= 2 ? 'var(--accent-orange-warm)' : 'none'
+                    }} 
                   />
                 </div>
-                <div>
-                  <h3 
-                    className="mb-0.5"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    Help & Support
-                  </h3>
-                  <p 
-                    className="text-sm"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Get assistance
-                  </p>
-                </div>
-              </div>
-              <ChevronRight 
-                className="h-5 w-5" 
-                style={{ color: 'var(--text-muted)' }}
-              />
+              ))}
             </div>
+            <p className="text-xs mt-3 text-center" style={{ color: 'var(--text-muted)' }}>
+              2 of 4 badges earned
+            </p>
           </CardContent>
         </Card>
+
+        <Separator className="my-4" style={{ backgroundColor: 'var(--border-soft)' }} />
 
         {/* Logout Button */}
         <Card
@@ -309,32 +249,17 @@ export function ProfilePage({
           onClick={onLogout}
         >
           <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div 
-                  className="p-3 rounded-xl"
-                  style={{ 
-                    backgroundColor: 'rgba(220, 38, 38, 0.1)',
-                  }}
-                >
-                  <LogOut 
-                    className="h-5 w-5" 
-                    style={{ color: '#dc2626' }}
-                  />
-                </div>
-                <div>
-                  <h3 
-                    className="mb-0"
-                    style={{ color: '#dc2626' }}
-                  >
-                    Logout
-                  </h3>
-                </div>
-              </div>
-              <ChevronRight 
+            <div className="flex items-center justify-center gap-3">
+              <LogOut 
                 className="h-5 w-5" 
                 style={{ color: '#dc2626' }}
               />
+              <h3 
+                className="mb-0"
+                style={{ color: '#dc2626' }}
+              >
+                Logout
+              </h3>
             </div>
           </CardContent>
         </Card>
